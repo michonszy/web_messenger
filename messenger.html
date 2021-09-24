@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            #messages{
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50%;
+                height:80%;
+                border: 1px solid black;
+            }
+            .center_form{
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50%;
+                height: 30%;
+            }
+            #txtinput{
+                width:93%;
+                height:10%;
+            }
+        </style>
+
+        <script>
+
+
+function httpGet()
+{
+    var theUrl = 'http://127.0.0.1:5000/get_messages';
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request (otherwise there is no response)
+    xmlHttp.send();
+    var response2 = xmlHttp.response;
+    json=JSON.parse(xmlHttp.responseText);
+    var response_div = document.getElementById('messages');
+    response_div.innerHTML=JSON.stringify(json['message']['username'][1]);  
+    console.log(json['message']['username']);
+    console.log(json['message']['message']);
+    return response2;
+}
+
+            </script>
+    </head>
+<body>
+    <div >
+        <p id='messages'>Witaj! Zaraz ktoś do Ciebie dołączy :)</p>
+    </div><br>
+
+    <style>
+        .hide { position:absolute; top:-1px; left:-1px; width:1px; height:1px; }
+      </style>
+      <button onclick=httpGet()>Pobierz najnowsze wiadomości</button> 
+      <iframe name="hiddenFrame" class="hide"></iframe>
+    <form action="http://127.0.0.1:5000/send_message?username=Bartosz" method="POST" class='center_form' target="hiddenFrame">
+        <input id='txtinput' type="text" id="message" name="message" placeholder="Enter your message">
+        <input type="submit" value="Send">
+      </form> 
+</body>
+
+</html>
