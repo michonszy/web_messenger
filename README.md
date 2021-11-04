@@ -1,2 +1,2 @@
 # web_messenger
-Messenger in Flask &amp; JS
+Messenger in Django (previous version also in Flask) &amp; JS
