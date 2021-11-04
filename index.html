@@ -92,8 +92,34 @@ li a:hover:not(.active) {
   transform: translateY(4px);
 }
 </style>
+<script type="text/javascript">
+  
+  function addFriendMessage()
+  {
+   var tag = document.createElement("p");
+   tag.id="friend_div";
+   var text = document.createTextNode("Siema co tam, jestem Twoim ziomeczkiem");
+   tag.appendChild(text);
+   var element = document.getElementById("messaged");
+   element.appendChild(tag);
+
+  }
+  function addMyMessage()
+  {
+    var msgDiv = document.getElementById("userTextInput").value;
+    document. getElementById('userTextInput'). value = "";
+   var tag = document.createElement("p");
+   tag.id="user_div";
+   var text = document.createTextNode(msgDiv);
+   tag.appendChild(text);
+   var element = document.getElementById("messaged");
+   element.appendChild(tag);
+
+  }
+ 
+  </script>
 </head>
-<body>
+<body onload="addFriendMessage()">
 
 <ul>
   <li><a class="active" href="#user1">Zbysiu Stonoga</a></li>
@@ -105,16 +131,17 @@ li a:hover:not(.active) {
 <br><h3>Zbigniew Stonoga</h3>
     <hr>    
 </div>
-<div style="margin-left:25%;padding:1px 16px;height:550px; overflow: scroll;">
-    
-    <p id="friend_div">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+<div id='messaged' style="margin-left:25%;padding:1px 16px;height:550px; overflow: scroll;">
+
+    <!-- <p id="friend_div">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
   <p id="user_div">Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.3</p>
-    
+     -->
 </div>
     <br>
 <div id='message_section'>
-  <input type='text'>
-    <button class="button">Click Me</button>
+  <input type='text' id="userTextInput" placeholder="Start mesadżing">
+    <button class="button" onclick="addMyMessage()">Send</button>
+    <button class="button" onclick="addFriendMessage()">getMessages</button>
 </div>
     <br><br>
 
