@@ -93,12 +93,23 @@ li a:hover:not(.active) {
 }
 </style>
 <script type="text/javascript">
-  
-  function addFriendMessage()
+
+  function addFriendMessage(name)
   {
+   console.log(name);
+   document.getElementById('current_friend_name').innerHTML = name;
+   document.getElementById('liUser1').innerHTML = name;
    var tag = document.createElement("p");
    tag.id="friend_div";
-   var text = document.createTextNode("Siema co tam, jestem Twoim ziomeczkiem");
+
+   var theUrl = 'http://srv10.mikr.us:20333/Laura';
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request (otherwise there is no response)
+    xmlHttp.send();
+    var response2 = xmlHttp.response;
+    json=JSON.parse(xmlHttp.responseText); 
+
+   var text = document.createTextNode(JSON.stringify(json['Message']));
    tag.appendChild(text);
    var element = document.getElementById("messaged");
    element.appendChild(tag);
@@ -115,20 +126,23 @@ li a:hover:not(.active) {
    var element = document.getElementById("messaged");
    element.appendChild(tag);
 
+   //send POST request to API
+   
+
   }
  
   </script>
 </head>
-<body onload="addFriendMessage()">
+<body>
 
 <ul>
-  <li><a class="active" href="#user1">Zbysiu Stonoga</a></li>
-  <li><a href="#user2">Rick Sanchez</a></li>
-  <li><a href="#user3">Hały Pota</a></li>
-  <li><a href="#user4">Skam Masta</a></li>
+  <li><a class="active" href="#user1" id='liUser1'>Random 1</a></li>
+  <li><a href="#user2" id='liUser2'>Random 2</a></li>
+  <li><a href="#user3" id='liUser3'>Random 3</a></li>
+  <li><a href="#user4" id='liUser4'>Random 4</a></li>
 </ul>
 <div style="margin-left:25%;padding:1px 16px;">
-<br><h3>Zbigniew Stonoga</h3>
+<br><h3 id='current_friend_name'>Jeszcze nie wiem z kim gadam</h3>
     <hr>    
 </div>
 <div id='messaged' style="margin-left:25%;padding:1px 16px;height:550px; overflow: scroll;">
@@ -141,7 +155,7 @@ li a:hover:not(.active) {
 <div id='message_section'>
   <input type='text' id="userTextInput" placeholder="Start mesadżing">
     <button class="button" onclick="addMyMessage()">Send</button>
-    <button class="button" onclick="addFriendMessage()">getMessages</button>
+    <button class="button" onclick="addFriendMessage('Laura')">getMessages</button>
 </div>
     <br><br>
 

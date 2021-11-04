@@ -13,7 +13,7 @@ def index(request):
 def get_car(request, username):
     if request.method == "GET":
         try:
-            lista = [{'Wiadomości od: ' : username}]
+            lista = [{"Wiadomości od: " : username}]
             for i in range(10):
                 try:
                     msg = Message.objects.get(username=username, msg_id = i)

@@ -1,15 +1,29 @@
 <html>
-<body>
-<div id="new">
+<body onload='httpGet()'>
+<div id="messages">
 <p id="p1">Tutorix</p>
 <p id="p2">Tutorialspoint</p>
 </div>
 <script>
-   var tag = document.createElement("p");
-   var text = document.createTextNode("Tutorix is the best e-learning platform");
-   tag.appendChild(text);
-   var element = document.getElementById("new");
-   element.appendChild(tag);
+
+function httpGet()
+{
+   var xhr = new XMLHttpRequest();
+xhr.open("POST", 'http://srv10.mikr.us:20333/car', true);
+
+//Send the proper header information along with the request
+
+
+xhr.onreadystatechange = function() { // Call a function when the state changes.
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        // Request finished. Do processing here.
+        console.log('done');
+    }
+}
+xhr.send("{\"username\":\"Chomik1\",\"msg_id\":1,\"message\":\"Tofcwwiam Cie\"}");
+// xhr.send(new Int8Array());
+// xhr.send(document);
+}
 </script>
 </body>
 </html>
