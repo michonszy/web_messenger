@@ -93,6 +93,33 @@ li a:hover:not(.active) {
 }
 </style>
 <script type="text/javascript">
+  function getHistoricalMessages(name){
+
+   var theUrl = 'http://srv10.mikr.us:20333/Laura/all';
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request (otherwise there is no response)
+    xmlHttp.send();
+    var response2 = xmlHttp.response;
+    json=JSON.parse(xmlHttp.responseText); 
+
+
+    let i = 0;
+
+    while(json[i]){
+      document.getElementById('current_friend_name').innerHTML = name;
+   document.getElementById('liUser1').innerHTML = name;
+   var tag = document.createElement("p");
+   tag.id="friend_div";
+   var wiadomoscText = JSON.stringify(json[i].Message);
+   var text = document.createTextNode(wiadomoscText);
+   tag.appendChild(text);
+   var element = document.getElementById("messaged");
+   element.appendChild(tag);
+   i++;
+
+    }
+
+  }
 
   function addFriendMessage(name)
   {
@@ -102,14 +129,13 @@ li a:hover:not(.active) {
    var tag = document.createElement("p");
    tag.id="friend_div";
 
-   var theUrl = 'http://srv10.mikr.us:20333/Laura';
+   var theUrl = 'http://srv10.mikr.us:20333/Laura/last';
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", theUrl, false ); // false for synchronous request (otherwise there is no response)
     xmlHttp.send();
     var response2 = xmlHttp.response;
     json=JSON.parse(xmlHttp.responseText); 
-
-   var text = document.createTextNode(JSON.stringify(json['Message']));
+   var text = document.createTextNode(JSON.stringify(json['OstatniaWiadomosc']));
    tag.appendChild(text);
    var element = document.getElementById("messaged");
    element.appendChild(tag);
@@ -130,10 +156,25 @@ li a:hover:not(.active) {
    
 
   }
+  function isUpToDate(username){
+   var theUrl = 'http://srv10.mikr.us:20333/Laura/all';
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request (otherwise there is no response)
+    xmlHttp.send();
+    var json=JSON.parse(xmlHttp.responseText); 
+    let i = 0;
+    var lastIndex = 0;
+    while(json[i]){
+      lastIndex = JSON.stringify(json[i].Id);
+      i++;
+    }
+    console.log(lastIndex);
+    return lastIndex;
+  }
  
   </script>
 </head>
-<body>
+<body onload="isUpToDate('Laura')">
 
 <ul>
   <li><a class="active" href="#user1" id='liUser1'>Random 1</a></li>
@@ -155,7 +196,7 @@ li a:hover:not(.active) {
 <div id='message_section'>
   <input type='text' id="userTextInput" placeholder="Start mesadżing">
     <button class="button" onclick="addMyMessage()">Send</button>
-    <button class="button" onclick="addFriendMessage('Laura')">getMessages</button>
+    <button class="button" onclick="getHistoricalMessages('Laura')">getMessages</button>
 </div>
     <br><br>
 
