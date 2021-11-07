@@ -139,7 +139,7 @@
         element.appendChild(tag);
       }
 
-      function addMyMessage() {
+      function addMyMessage(username) {
         var msgDiv = document.getElementById("userTextInput").value;
         document.getElementById('userTextInput').value = "";
         var tag = document.createElement("p");
@@ -149,6 +149,11 @@
         var element = document.getElementById("messaged");
         element.appendChild(tag);
         //send POST request to API
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://srv10.mikr.us:20333/addMessage", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+        var wiadomosc = "{\"username\":\"Sajmon\",\"message\":\""+msgDiv+"\"}";
+        xhr.send(wiadomosc);
       }
 
       function sleep(milliseconds) {
@@ -173,41 +178,53 @@
         }
         console.log(lastIndex);
         let iw = 1;
-        while (iw < 10) {
+        //while (iw < 10) {
+          //sleep(3000);
           var theUrl = 'http://srv10.mikr.us:20333/Laura/last';
           var xmlHttp = new XMLHttpRequest();
           xmlHttp.open("GET", theUrl, false); // false for synchronous request (otherwise there is no response)
           xmlHttp.send();
           var response2 = xmlHttp.response;
           json = JSON.parse(xmlHttp.responseText);
-          var text = json['OstatniIndex'];
+          var text = json['OstatniIndex']; 
           if (text == lastIndex) {
             console.log("No new messages");
+            setTimeout(getLastIndex,3000);
           } else {
             console.log("New msg, update needed");
             addFriendMessage(username);
             iw=15;
           }
-          sleep(3000);
-        }
-        getLastIndex(username);
+          
+        //}
+        //sleep(3000);
+        //getLastIndex(username);
       }
-
+      function test(username){
+        if (confirm('Czy chcesz nawiązać konwersację z: '+username+'?')) {
+          // Save it!
+          console.log('Przyjęto konwersację z '+username);
+        } else {
+          // Do nothing!
+          console.log('Odrzucono konwersację z '+username);
+        }
+      }
+    
     </script>
   </head>
   <body>
     <ul>
       <li>
-        <a class="active" href="javascript:getHistoricalMessages('Laura')" id='liUser1'>Random 1</a>
+        <a class="active" href="javascript:getHistoricalMessages('Laura')" id='liUser1'>Wolne miejsce</a>
       </li>
       <li>
-        <a href="#user2" id='liUser2'>Random 2</a>
+        <a href="#user2" id='liUser2'>Wolne miejsce 2</a>
       </li>
       <li>
-        <a href="#user3" id='liUser3'>Random 3</a>
+        <a href="#user3" id='liUser3'>Wolne miejsce 3</a>
       </li>
       <li>
-        <a href="#user4" id='liUser4'>Random 4</a>
+        <a href="#user4" id='liUser4'>Wolne miejsce 4</a>
       </li>
     </ul>
     
@@ -221,8 +238,8 @@
     <br>
     <div id='message_section'>
       <input type='text' id="userTextInput" placeholder="Start mesadżing">
-      <button class="button" onclick="addMyMessage()">Send</button>
-      <button class="button" onclick="getLastIndex('Laura')">getMessages</button>
+      <button class="button" onclick="addMyMessage('Sajmon')">Send</button>
+      <button class="button" onclick="test('Maciek')">testButton</button>
     </div>
     <br>
     <br>
